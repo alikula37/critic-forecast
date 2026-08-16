@@ -1,0 +1,18 @@
+.env
+data/
+__pycache__/
+*.pyc
+node_modules/
+dist/
+.venv/
+venv/
+*.duckdb
+*.duckdb.wal
+.DS_Store
+*.log
+
+# graphify: her extract sonrasi yeniden uretilir, prompt cache icin ignore
+graphify-out/
+
+# opencode tooling deps
+.opencode/node_modules/

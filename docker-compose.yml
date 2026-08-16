@@ -1,0 +1,158 @@
+name: critic-forecast
+
+x-python-service: &python-service
+  restart: unless-stopped
+  environment:
+    PYTHONUNBUFFERED: "1"
+    STORAGE_URL: http://storage:9000
+    REDIS_URL: redis://redis:6379/0
+  depends_on:
+    storage:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  storage:
+    build: ./services/storage
+    restart: unless-stopped
+    environment:
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - duckdb-data:/data
+    ports:
+      - "9000:9000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:9000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  deep-learning-engine:
+    build: ./services/deep-learning-engine
+    <<: *python-service
+    environment:
+      PYTHONUNBUFFERED: "1"
+      STORAGE_URL: http://storage:9000
+      REDIS_URL: redis://redis:6379/0
+      DLE_EPOCHS: "${DLE_EPOCHS:-80}"
+      DLE_WALKFORWARD_EPOCHS: "${DLE_WALKFORWARD_EPOCHS:-25}"
+      DLE_BATCH_SIZE: "${DLE_BATCH_SIZE:-32}"
+      DLE_SEQUENCE_LEN: "${DLE_SEQUENCE_LEN:-60}"
+    ports:
+      - "9001:9001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:9001/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  quant-engine:
+    build: ./services/quant-engine
+    <<: *python-service
+    environment:
+      PYTHONUNBUFFERED: "1"
+      STORAGE_URL: http://storage:9000
+      REDIS_URL: redis://redis:6379/0
+      MC_N_PATHS: "${MC_N_PATHS:-10000}"
+    ports:
+      - "9002:9002"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:9002/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api-gateway:
+    build: ./services/api-gateway
+    <<: *python-service
+    environment:
+      PYTHONUNBUFFERED: "1"
+      STORAGE_URL: http://storage:9000
+      REDIS_URL: redis://redis:6379/0
+      DEEP_LEARNING_URL: http://deep-learning-engine:9001
+      QUANT_URL: http://quant-engine:9002
+      CRITIC_TEMPERATURE: "${CRITIC_TEMPERATURE:-1.0}"
+    ports:
+      - "8000:8000"
+    depends_on:
+      storage:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      deep-learning-engine:
+        condition: service_healthy
+      quant-engine:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  worker:
+    build: ./services/api-gateway
+    command: ["python", "-m", "app.worker"]
+    <<: *python-service
+    depends_on:
+      storage:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      deep-learning-engine:
+        condition: service_healthy
+      quant-engine:
+        condition: service_healthy
+
+  worker-2:
+    build: ./services/api-gateway
+    command: ["python", "-m", "app.worker"]
+    <<: *python-service
+    depends_on:
+      storage:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      deep-learning-engine:
+        condition: service_healthy
+      quant-engine:
+        condition: service_healthy
+
+  scheduler:
+    build: ./services/api-gateway
+    command: ["python", "-m", "app.scheduler"]
+    <<: *python-service
+    depends_on:
+      storage:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      deep-learning-engine:
+        condition: service_healthy
+      quant-engine:
+        condition: service_healthy
+
+  ui-dashboard:
+    build: ./services/ui-dashboard
+    restart: unless-stopped
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+    ports:
+      - "8081:80"
+
+volumes:
+  duckdb-data:
+  redis-data:

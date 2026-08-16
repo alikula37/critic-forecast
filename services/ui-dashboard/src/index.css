@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter-tight";
+
+@theme {
+  --color-abyss: #012624;
+  --color-deep: #011d1c;
+  --color-kelp: #003734;
+  --color-mist: #eafcfb;
+  --color-platinum: #ffffff;
+  --color-silver: #c9dcda;
+  --color-slate-deep: #8fa8a6;
+  --color-phosphor: #fde9ff;
+  --color-teal: #2dd4bf;
+  --color-violet-glow: #8b7cf6;
+  --color-danger: #ff6b81;
+  --color-amber-glow: #f5a97f;
+
+  --font-sans: "Inter Tight Variable", ui-sans-serif, system-ui, sans-serif;
+  --radius-card: 16px;
+  --radius-small: 6px;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(1200px 800px at 80% -10%, rgba(45, 212, 191, 0.22), transparent 60%),
+    radial-gradient(900px 600px at -10% 110%, rgba(253, 233, 255, 0.08), transparent 55%),
+    var(--color-abyss);
+  color: var(--color-mist);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+}
+
+.glass-deep {
+  background: rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-slate-deep);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #14b8a6 0%, #14b8a6 40%, #67e8f9 100%);
+  color: #052624;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: filter 0.2s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.15);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: var(--color-mist);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  transition: border-color 0.2s ease;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #ffffff;
+}
+
+.stat-number {
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-phosphor);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 1.6s ease-in-out infinite;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 800px 100%;
+  animation: skeleton-shimmer 1.4s linear infinite;
+}

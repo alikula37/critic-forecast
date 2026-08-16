@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1f1e"/>
+      <stop offset="100%" stop-color="#052e2b"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2dd4bf"/>
+      <stop offset="100%" stop-color="#0e9384"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="560" fill="url(#bg)" rx="16"/>
+  <text x="450" y="38" fill="#edfffe" font-size="22" font-weight="700" text-anchor="middle">🧠 Critic Forecast — Mimari / Architecture</text>
+
+  <!-- UI -->
+  <rect x="330" y="64" width="240" height="64" rx="10" fill="#0e3f3b" stroke="#2dd4bf" stroke-width="1.6"/>
+  <text x="450" y="90" fill="#fde9ff" font-size="15" font-weight="700" text-anchor="middle">🖥️ ui-dashboard</text>
+  <text x="450" y="110" fill="#9fb8b5" font-size="11" text-anchor="middle">React + Vite + lightweight-charts · :8081</text>
+
+  <!-- Gateway -->
+  <rect x="330" y="176" width="240" height="70" rx="10" fill="#0e3f3b" stroke="#8b7cf6" stroke-width="1.6"/>
+  <text x="450" y="202" fill="#fde9ff" font-size="15" font-weight="700" text-anchor="middle">⚖️ api-gateway · Hakem (Critic)</text>
+  <text x="450" y="222" fill="#9fb8b5" font-size="11" text-anchor="middle">FastAPI + RQ + Redis pub/sub · :8000</text>
+  <text x="450" y="238" fill="#8b7cf6" font-size="11" text-anchor="middle">QRA ensamble · skorlama · rejim faktörü</text>
+
+  <!-- Engines -->
+  <rect x="60" y="310" width="360" height="86" rx="10" fill="#0e3f3b" stroke="#7ee8fa" stroke-width="1.6"/>
+  <text x="240" y="336" fill="#fde9ff" font-size="14" font-weight="700" text-anchor="middle">🔮 deep-learning-engine</text>
+  <text x="240" y="356" fill="#9fb8b5" font-size="11" text-anchor="middle">Bi-LSTM + Attention (quantile) · XGBoost · LightGBM</text>
+  <text x="240" y="374" fill="#9fb8b5" font-size="11" text-anchor="middle">rejim koşullu eğitim · Brier · kalibrasyon · :9001</text>
+
+  <rect x="480" y="310" width="360" height="86" rx="10" fill="#0e3f3b" stroke="#ffb3c1" stroke-width="1.6"/>
+  <text x="660" y="336" fill="#fde9ff" font-size="14" font-weight="700" text-anchor="middle">📊 quant-engine</text>
+  <text x="660" y="356" fill="#9fb8b5" font-size="11" text-anchor="middle">HMM rejim · GARCH vol · STL döngü · ETS · 10k Monte Carlo</text>
+  <text x="660" y="374" fill="#9fb8b5" font-size="11" text-anchor="middle">VectorBT strateji backtesti · :9002</text>
+
+  <!-- Storage -->
+  <rect x="200" y="452" width="500" height="64" rx="10" fill="#0e3f3b" stroke="#fde9ff" stroke-width="1.6"/>
+  <text x="450" y="480" fill="#fde9ff" font-size="14" font-weight="700" text-anchor="middle">🗄️ storage (DuckDB) + 🧺 redis (cache / kuyruk)</text>
+  <text x="450" y="500" fill="#9fb8b5" font-size="11" text-anchor="middle">ohlcv · ensemble_forecasts · forecast_points · model_scores · strategy_backtests · :9000</text>
+
+  <!-- Arrows -->
+  <line x1="450" y1="128" x2="450" y2="174" stroke="#2dd4bf" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="246" x2="450" y2="308" stroke="#7ee8fa" stroke-width="2"/>
+  <line x1="240" y1="396" x2="390" y2="450" stroke="#fde9ff" stroke-width="2"/>
+  <line x1="660" y1="396" x2="510" y2="450" stroke="#fde9ff" stroke-width="2"/>
+  <line x1="150" y1="308" x2="320" y2="246" stroke="#7ee8fa" stroke-width="2" stroke-dasharray="5 4"/>
+  <line x1="750" y1="308" x2="580" y2="246" stroke="#ffb3c1" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="455" y="152" fill="#2dd4bf" font-size="11">REST + WebSocket</text>
+  <text x="320" y="280" fill="#9fb8b5" font-size="11">/predict</text>
+  <text x="600" y="280" fill="#9fb8b5" font-size="11">/analyze</text>
+
+  <text x="450" y="546" fill="#5f7a77" font-size="11" text-anchor="middle">6 model yarışır → Hakem ağırlıklı P10/P50/P90 konisi → gerçekleşmeler geri beslenir ♻️</text>
+</svg>
